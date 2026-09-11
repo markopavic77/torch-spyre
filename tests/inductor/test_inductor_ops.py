@@ -2053,6 +2053,12 @@ class TestOps(unittest.TestCase, metaclass=ParameterizedTestMeta):
                     0.9,
                     FP16_EPS,
                 ),
+                "fp32": (
+                    cached_randn((128, 256), dtype=torch.float32),
+                    0.1,
+                    0.9,
+                    FP32_EPS,
+                ),
             },
         },
         (
