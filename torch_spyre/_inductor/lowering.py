@@ -1110,10 +1110,11 @@ def lower_softplus(x, beta=1.0, threshold=20.0):
 
 @register_spyre_lowering(torch.ops.spyre.clamp)
 def lower_clamp(x, min=None, max=None):
+    dtype = x.get_dtype()
     if min is None:
-        min = torch.finfo(torch.float16).min
+        min = torch.finfo(dtype).min if dtype.is_floating_point else torch.iinfo(dtype).min
     if max is None:
-        max = torch.finfo(torch.float16).max
+        max = torch.finfo(dtype).max if dtype.is_floating_point else torch.iinfo(dtype).max
     pw = Pointwise.create(
         device=x.get_device(),
         dtype=x.get_dtype(),
